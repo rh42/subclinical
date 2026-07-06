@@ -54,7 +54,7 @@ CONTENT.labels = [
   { id: "N03", bucket: "Neuro-Phys", val: "load", dims: ["vigilance"], zh: "一點聲音或訊息就能讓心跳加速", en: "Small sounds or messages spike your heart rate" },
   { id: "N04", bucket: "Neuro-Phys", val: "load", dims: ["depletion"], zh: "一放鬆就容易頭痛或全身痠痛浮出來", en: "Pain shows up as soon as you try to relax" },
   { id: "N05", bucket: "Neuro-Phys", val: "load", dims: ["depletion", "dissociation"], cut: true, zh: "很難分得出「累」跟「被壓榨過頭」的差別", en: "Hard to tell tired from over-exploited" },
-  { id: "N06", bucket: "Neuro-Phys", val: "load", dims: ["dissociation", "depletion"], zh: "常常覺得身體在硬撐一套行程，心裡想躺平", en: "Body going through the motions, mind wants to lie down" },
+  { id: "N06", bucket: "Neuro-Phys", val: "load", dims: ["dissociation", "depletion"], zh: "常常覺得身體在硬撐一套行程，心裡想停機", en: "Body going through the motions, mind wants to lie down" },
   { id: "N07", bucket: "Neuro-Phys", val: "load", dims: ["depletion", "affect_blunting"], zh: "體力還撐得住，但一想到要再社交就全身軟掉", en: "Physically okay, socially exhausted at the thought" },
 
   { id: "N08", bucket: "Neuro-Phys", val: "prot", dims: ["resilience"], zh: "累到一定程度時，會允許自己直接躺平", en: "Letting yourself collapse when you hit a certain level of tired", coupon: { en: "LIES DOWN ON PURPOSE", zh: "策略性躺平" } },
