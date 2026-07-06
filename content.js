@@ -7,7 +7,7 @@ const CONTENT = {};
 CONTENT.buckets = ["Affective", "Behavioural", "Cognitive", "Neuro-Phys", "Existential"];
 
 CONTENT.labels = [
-  { id: "A01", bucket: "Affective", val: "load", dims: ["affect_blunting"], zh: "情緒像被調成小聲播放", en: "Emotions feel turned down low" },
+  { id: "A01", bucket: "Affective", val: "load", dims: ["affect_blunting"], zh: "以前喜歡的事，現在做起來像在跑流程", en: "Things you used to enjoy now feel like admin" },
   { id: "A02", bucket: "Affective", val: "load", dims: ["vigilance", "depletion"], zh: "外面照常在社交，裡面其實早就爆表", en: "Socially fine, internally overloaded" },
   { id: "A03", bucket: "Affective", val: "load", dims: ["depletion", "affect_blunting"], zh: "明明沒發生什麼大事，心情卻長期偏低電量", en: "Low mood without any big event" },
   { id: "A04", bucket: "Affective", val: "load", dims: ["vigilance", "depletion"], zh: "小事也能直接戳中", en: "Small things hit surprisingly hard" },
