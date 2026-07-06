@@ -1,0 +1,279 @@
+:root {
+  --ink: #222222;
+  --folder: #e6d5a2;
+  --sheet: #fbfaf6;
+  --sheet-line: #cbbc8e;
+  --blue-ink: #2b4a9e;
+  --stamp-red: #a32d2d;
+  --muted: #666666;
+  --doc-paper: #f4f4f0;
+  --doc-line: #c4c4bc;
+  --doc-rule: #d8d8d2;
+  --doc-rule-dash: #c9c9c0;
+  --doc-muted: #6e6e67;
+  --doc-ink: #45453f;
+  --receipt-paper: #f7f6f1;
+  --receipt-ink: #2b2a26;
+  --receipt-muted: #6b6a63;
+  --mono: "Space Mono", "PingFang TC", "Noto Sans TC", sans-serif;
+  --serif: "Fraunces", "Noto Serif TC", serif;
+  --sans: "IBM Plex Sans", "Noto Sans TC", -apple-system, sans-serif;
+  --serif-text: "STIX Two Text", "Noto Serif TC", Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--folder);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* The whole site is an open manila folder: paper sheet inside, language tabs on its top edge. */
+.file-wrap { max-width: 764px; margin: 0 auto; padding: 26px 22px 70px; }
+.container {
+  max-width: none; margin: 0; padding: 42px 34px 64px;
+  background: var(--sheet); border: 1px solid var(--sheet-line); position: relative;
+}
+
+h1 {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 650;
+  letter-spacing: -0.5px;
+  margin: 0 0 5px;
+  position: relative;
+  display: inline-block;
+}
+/* H1 mis-encode glitch lives in app.js (character substitutions, no motion). */
+
+.tagline { font-family: var(--mono); font-size: 0.9rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--ink); color: #fff; padding: 10px 16px; font-family: var(--mono);
+}
+.skip-link:focus { left: 0; }
+
+button:focus-visible, a:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--blue-ink); outline-offset: 2px;
+}
+
+/* Language toggle as folder tabs on the sheet's top edge. Still two buttons
+   with aria-pressed; the filing-cabinet metaphor is CSS only. */
+.lang-toggle { display: flex; justify-content: flex-end; padding: 0 18px; }
+.lang-btn {
+  background: #e6dec5; border: 1px solid var(--sheet-line); border-bottom: none;
+  border-radius: 5px 5px 0 0; color: #5f594a;
+  font-family: var(--mono); font-size: 0.8rem;
+  padding: 4px 16px 8px; margin-left: 5px; margin-bottom: -6px; cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  position: relative; top: 4px;
+}
+/* Inactive tabs slide under the sheet (later sibling paints over them);
+   only the active tab lifts above the sheet edge and merges with it. */
+.lang-btn.active {
+  background: var(--sheet); color: var(--ink); font-weight: 700;
+  top: 0; padding: 7px 16px 4px; margin-bottom: -1px; z-index: 2;
+}
+
+.landing { text-align: center; padding-top: 40px; }
+.landing-body { font-family: var(--mono); color: var(--blue-ink); font-weight: bold; font-size: 1.05rem; margin: 30px 0 40px; }
+
+.progress-wrap { font-family: var(--mono); margin: 10px 0 8px; display: flex; justify-content: space-between; align-items: baseline; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+.progress-track { height: 4px; background: #e4e4e0; border-radius: 2px; overflow: hidden; margin-bottom: 6px; }
+.progress-fill { height: 100%; background: var(--ink); transition: width 0.4s ease; }
+.interstitial { font-family: var(--mono); min-height: 22px; font-size: 0.8rem; color: var(--blue-ink); opacity: 0; }
+.interstitial.show { animation: inter-fade 3.2s ease forwards; }
+@keyframes inter-fade { 0% { opacity: 0; } 12% { opacity: 1; } 75% { opacity: 1; } 100% { opacity: 0; } }
+
+.bucket-header {
+  font-family: var(--serif); font-weight: 700; font-size: 1.3rem;
+  border-bottom: 2px solid var(--ink); margin: 26px 0 4px; padding-bottom: 5px;
+}
+.module-hint { font-size: 0.8rem; color: var(--muted); margin: 6px 0 0; }
+.sub-header {
+  font-family: var(--mono); font-weight: 700; color: var(--blue-ink);
+  font-size: 0.85rem; margin: 22px 0 12px; text-transform: uppercase;
+}
+
+.checklist { border: 2px solid var(--ink); background: #fff; }
+.checklist-head {
+  display: grid; grid-template-columns: 56px 1fr 72px;
+  font-family: var(--mono); font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); border-bottom: 1.5px solid var(--ink); padding: 6px 0;
+}
+.checklist-head span:first-child { grid-column: 2; }
+.checklist-head span:last-child { text-align: center; }
+.row-item {
+  display: grid; grid-template-columns: 56px 1fr 72px; align-items: center;
+  width: 100%; text-align: left; background: #fff; border: none;
+  border-bottom: 1px solid #e4e4de; padding: 10px 0; cursor: pointer;
+  font-family: var(--sans); font-size: 0.98rem; line-height: 1.45; color: #333;
+  transition: background 0.15s;
+}
+.row-item:last-child { border-bottom: none; }
+.row-item:hover { background: #f6f4ee; }
+.row-id { font-family: var(--mono); font-size: 0.7rem; color: #767670; text-align: center; letter-spacing: 1px; }
+.row-text { padding-right: 12px; }
+.row-box { justify-self: center; width: 20px; height: 20px; border: 1.5px solid var(--ink); background: #fff; position: relative; }
+.row-item[aria-pressed="true"] { background: #f8f3ea; }
+.row-item[aria-pressed="true"] .row-box::after {
+  content: "✓"; position: absolute; left: 1px; top: -9px;
+  font-family: var(--serif-text); font-size: 1.6rem; font-weight: 700;
+  color: var(--stamp-red); transform: rotate(-6deg);
+}
+
+.nav-row { display: flex; gap: 12px; margin-top: 36px; }
+.btn {
+  border: 2px solid var(--ink); background: #fff; color: var(--ink);
+  font-family: var(--mono); font-weight: 700; text-transform: uppercase;
+  padding: 13px 18px; font-size: 1rem; cursor: pointer; transition: all 0.2s;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn:hover { background: var(--ink); color: #fff; box-shadow: 2px 2px 0 var(--blue-ink); }
+.btn:disabled { background: #eee; border-color: #ccc; color: #999; box-shadow: none; pointer-events: none; }
+.btn-primary { flex: 1; }
+.btn-ghost { border-width: 1px; box-shadow: none; font-weight: 400; text-transform: none; }
+.btn-ghost:hover { background: #fff; color: var(--blue-ink); border-color: var(--blue-ink); box-shadow: none; }
+
+.error-msg { font-family: var(--mono); color: var(--stamp-red); font-weight: bold; text-align: center; margin-top: 15px; animation: shake 0.5s; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); } 20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); }
+}
+
+.snark-line {
+  position: fixed; left: 16px; bottom: 14px; max-width: 70vw;
+  font-size: 0.78rem; color: var(--receipt-muted); background: var(--receipt-paper);
+  border: 1px solid #ddd; padding: 6px 12px; opacity: 0;
+  transition: opacity 0.6s ease; pointer-events: none; z-index: 50;
+}
+.snark-line.show { opacity: 1; }
+
+.processing { text-align: center; padding: 70px 0 90px; }
+/* The seal's blot assembling; drips in cell by cell with the percent (app.js). */
+.proc-blot { display: block; width: 94px; height: 94px; margin: 0 auto 30px; color: var(--blue-ink); }
+.proc-blot rect { fill: currentColor; opacity: 0; transition: opacity 0.28s ease; }
+.processing-line { font-family: var(--mono); font-size: 0.95rem; min-height: 28px; color: var(--ink); }
+.processing .progress-track { max-width: 320px; margin: 24px auto 0; }
+.processing .progress-fill { transition: width 0.45s ease; }
+.proc-pct { font-family: var(--mono); font-size: 2rem; font-weight: 700; margin-top: 16px; }
+
+.doc {
+  background-color: var(--doc-paper);
+  /* flat sheet, no shadow; subtle fibre grain via tiled feTurbulence noise */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.24 0 0 0 0 0.23 0 0 0 0 0.20 0 0 0 0.055 0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23g)'/%3E%3C/svg%3E");
+  border: 1px solid var(--doc-line); padding: 34px 34px 22px;
+  margin-top: 34px; position: relative;
+  font-family: var(--mono);
+}
+.doc-inst { text-align: center; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; }
+.doc-dept { text-align: center; font-size: 0.7rem; color: var(--doc-muted); text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--doc-rule); padding-bottom: 14px; margin: 2px 24px 22px; }
+.doc-label { font-size: 0.7rem; color: var(--doc-muted); text-transform: uppercase; letter-spacing: 1px; }
+.doc-tag { display: inline-block; margin-left: 8px; padding: 1px 7px; border: 1.5px solid var(--stamp-red); color: var(--stamp-red); font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; transform: rotate(-2deg); }
+.doc-title { font-family: var(--serif); font-size: 1.9rem; font-weight: 700; line-height: 1.25; margin: 6px 0 4px; }
+.doc-title:focus { outline: none; }
+.doc-rarity { font-size: 0.7rem; color: var(--doc-muted); letter-spacing: 0.4px; margin-bottom: 14px; }
+.doc-note { font-family: var(--serif-text); font-style: italic; font-size: 1.15rem; color: var(--doc-ink); line-height: 1.7; }
+/* zh has no italics; Iansui gives the examiner's note its handwritten register instead. Experimental. */
+:lang(zh-Hant) .doc-note { font-family: "Iansui", "Noto Serif TC", serif; font-style: normal; }
+.doc-note .sincere { display: block; margin-top: 10px; font-family: var(--mono); font-style: normal; font-size: 0.78rem; color: var(--blue-ink); }
+
+.doc-stamp {
+  position: absolute; top: 26px; right: 22px; transform: rotate(8deg);
+  border: 2.5px solid var(--stamp-red); color: var(--stamp-red); font-weight: 700; font-size: 0.7rem;
+  letter-spacing: 1.5px; padding: 5px 10px; opacity: 0.85; text-transform: uppercase;
+}
+
+.doc-filerow { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--doc-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+.doc-profile { margin: 26px 0 6px; }
+.doc-profile svg { width: 100%; height: auto; display: block; margin-top: 4px; }
+
+.prot-block { margin-top: 22px; padding-top: 16px; border-top: 1px dashed var(--doc-rule-dash); font-size: 0.78rem; letter-spacing: 0.4px; }
+.prot-list { margin: 0 0 8px; padding: 0; list-style: none; }
+.prot-list li { margin-bottom: 3px; color: var(--doc-ink); }
+.prot-check { color: var(--stamp-red); font-weight: 700; margin-right: 8px; }
+.prot-none { color: var(--doc-muted); margin-bottom: 8px; }
+.coverage-uncovered { color: var(--stamp-red); margin-bottom: 4px; }
+.coverage-integrity { font-weight: 700; margin-top: 8px; }
+
+.profile-cutnote { font-family: var(--mono); font-size: 0.7rem; color: var(--stamp-red); letter-spacing: 0.5px; margin-top: 6px; }
+
+.process-block { margin-top: 20px; padding-top: 14px; border-top: 1px dashed var(--doc-rule-dash); }
+.process-head { font-size: 0.7rem; color: var(--doc-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.process-block li { font-size: 0.78rem; color: var(--doc-ink); margin-bottom: 3px; list-style: square; }
+.process-block ul { margin: 0; padding-left: 18px; }
+
+.doc-footer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--doc-rule); display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--doc-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+/* Institute seal: two counter-rotating text rings around the blot. Decorative
+   (aria-hidden); ring text repeats the name + tagline that exist as real text. */
+.seal { display: block; font-family: var(--mono); }
+.seal-spin, .seal-spin-rev { transform-origin: 100px 100px; }
+.seal-spin { animation: seal-rot 90s linear infinite; }
+.seal-spin-rev { animation: seal-rot-rev 60s linear infinite; }
+@keyframes seal-rot { to { transform: rotate(360deg); } }
+@keyframes seal-rot-rev { to { transform: rotate(-360deg); } }
+.landing-seal { display: flex; justify-content: center; margin-bottom: 26px; color: var(--ink); }
+.doc-sealrow { display: flex; justify-content: flex-end; margin-top: 20px; color: var(--blue-ink); opacity: 0.85; }
+
+.result-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.receipt-preview { margin-top: 26px; text-align: center; }
+.receipt-preview img { max-width: 340px; width: 100%; box-shadow: 0 14px 34px rgba(0,0,0,0.16); transform: rotate(-0.6deg); }
+.receipt-text { margin: 18px auto 0; max-width: 420px; text-align: left; font-size: 0.8rem; }
+.receipt-text summary { cursor: pointer; color: var(--muted); padding: 6px 0; }
+.receipt-text pre {
+  background: var(--receipt-paper); border: 1px solid #ddd; padding: 14px;
+  font-size: 0.72rem; line-height: 1.5; white-space: pre-wrap; overflow-x: auto; color: var(--receipt-ink);
+}
+.receipt-text .btn { margin-top: 6px; font-size: 0.8rem; padding: 8px 14px; }
+
+/* Form-margin footer with a proto-blot security border. */
+.fine-print { margin-top: 64px; text-align: left; display: block; }
+.blotstrip { display: block; width: 100%; height: 12px; color: var(--doc-muted); opacity: 0.6; overflow: hidden; }
+.fp-body { font-size: 0.72rem; color: var(--muted); line-height: 1.65; margin: 10px 0 8px; }
+.fp-head { font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.fp-imprint { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 16px; font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+.fp-imprint a { color: inherit; }
+
+/* After-hours (placement testbed): the room light goes off — folder near-black,
+   sheet dimmed — but documents keep their own light (.doc, receipt untouched).
+   Time-gated event driven by app.js; never reads prefers-color-scheme. */
+html.after-hours body { background: #191813; }
+html.after-hours .container { background: #eae6d8; border-color: #55523f; }
+html.after-hours .lang-btn { background: #2a2820; border-color: #55523f; color: #b7b1a0; }
+html.after-hours .lang-btn.active { background: #eae6d8; color: var(--ink); }
+
+/* The lights pull-cord: hangs over the folder margin beside the sheet.
+   Only rendered during the after-hours window; pulling it toggles the room. */
+.pull-cord {
+  position: fixed; top: 0; right: max(12px, calc(50vw - 382px - 34px)); z-index: 100;
+  background: none; border: none; cursor: pointer; padding: 0 12px 6px;
+}
+.pull-cord .cord-line { display: block; width: 2px; height: 54px; background: #857f6a; margin: 0 auto; }
+.pull-cord .cord-handle { display: block; width: 9px; height: 15px; border-radius: 4.5px; background: #857f6a; margin: 1px auto 0; }
+.pull-cord:hover .cord-line, .pull-cord:hover .cord-handle { background: #b7b1a0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .error-msg { animation: none; }
+  .interstitial.show { animation: none; opacity: 1; }
+  .progress-fill, .pill, .btn, .lang-btn, .snark-line { transition: none; }
+  .seal-spin, .seal-spin-rev { animation: none; }
+  .proc-blot rect { transition: none; }
+}
+
+@media (max-width: 600px) {
+  .file-wrap { padding: 10px 0 56px; }
+  .lang-toggle { padding: 0 14px; }
+  .container { padding: 26px 16px 40px; border-left: none; border-right: none; }
+  .processing { padding: 52px 0 70px; }
+  h1 { font-size: 1.8rem; }
+  .doc { padding: 24px 18px 16px; }
+  .doc-stamp { position: static; display: inline-block; margin-top: 10px; }
+  .nav-row { flex-direction: column; }
+  .checklist-head, .row-item { grid-template-columns: 42px 1fr 56px; }
+}
