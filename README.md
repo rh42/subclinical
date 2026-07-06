@@ -14,6 +14,10 @@ This is satire about being tired. It cannot diagnose you, and it will not notice
 
 Nothing you select leaves your browser. Your file is stored on your own device, which makes it legally your problem.
 
+## Accessibility
+
+The Institute discriminates by vibe only. Fully keyboard-operable, screen-reader labelled throughout (decorative stamps and seals are hidden, the diagnosis chart is described in words), WCAG AA contrast, and it holds still if your system asks for reduced motion. The document language follows the language toggle.
+
 ## Credits
 
 Made by [@jelliwolf](https://x.com/jelliwolf). Powered by questionable coping mechanisms.

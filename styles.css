@@ -47,7 +47,11 @@ h1 {
   margin: 0 0 5px;
   position: relative;
   display: inline-block;
+  text-wrap: balance;
 }
+
+h2, .doc-title, .bucket-header { text-wrap: balance; }
+p, .row-text, .doc-note, .landing-body { text-wrap: pretty; }
 /* H1 mis-encode glitch lives in app.js (character substitutions, no motion). */
 
 .tagline { font-family: var(--mono); font-size: 0.9rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
@@ -117,7 +121,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible {
 }
 .row-item:last-child { border-bottom: none; }
 .row-item:hover { background: #f6f4ee; }
-.row-id { font-family: var(--mono); font-size: 0.7rem; color: #767670; text-align: center; letter-spacing: 1px; }
+.row-id { font-family: var(--mono); font-size: 0.7rem; color: #6b6b65; text-align: center; letter-spacing: 1px; }
 .row-text { padding-right: 12px; }
 .row-box { justify-self: center; width: 20px; height: 20px; border: 1.5px solid var(--ink); background: #fff; position: relative; }
 .row-item[aria-pressed="true"] { background: #f8f3ea; }
@@ -276,4 +280,5 @@ html.after-hours .lang-btn.active { background: #eae6d8; color: var(--ink); }
   .doc-stamp { position: static; display: inline-block; margin-top: 10px; }
   .nav-row { flex-direction: column; }
   .checklist-head, .row-item { grid-template-columns: 42px 1fr 56px; }
+  .checklist-head { letter-spacing: 0.5px; }
 }

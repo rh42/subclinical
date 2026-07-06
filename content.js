@@ -240,6 +240,12 @@ CONTENT.processing = [
   { en: "Finalizing…", zh: "完成中…", pct: 99, ms: 1400 }
 ];
 
+// ~1-in-40 processing anomaly. The date is tomorrow. Never referenced again.
+CONTENT.priorFile = {
+  step: { en: "EXISTING FILE LOCATED — LAST VISIT: {date}", zh: "偵測到既有檔案——上次就診：{date}" },
+  visit: { en: "VISIT 2 OF 2", zh: "第 2 次就診（共 2 次）" }
+};
+
 CONTENT.processNotes = {
   night: { en: "Assessment completed at {time}. This has been added to the file.", zh: "評估於 {time} 完成。此項事實已納入檔案。" },
   revisions: { en: "Subject revised answers ×{n}. Noted.", zh: "個體修改作答 {n} 次。已記錄。" },

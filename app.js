@@ -370,7 +370,15 @@ function renderProcessing() {
     }, 45);
   };
   setShown(0);
-  const steps = CONTENT.processing;
+  let steps = CONTENT.processing;
+  // Rare anomaly: the Institute finds a file for a visit that hasn't happened.
+  S.priorFile = Math.random() < 0.025;
+  if (S.priorFile) {
+    const d = new Date(Date.now() + 864e5);
+    const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    const egg = { en: fmt(CONTENT.priorFile.step.en, { date: iso }), zh: fmt(CONTENT.priorFile.step.zh, { date: iso }), pct: 54, ms: 1700 };
+    steps = [...steps.slice(0, 3), egg, ...steps.slice(3)];
+  }
   let i = 0;
   const tick = () => {
     if (i < steps.length) {
@@ -583,6 +591,7 @@ function buildReceiptLines(r) {
   }
   lines.push({ t: "sep" });
   R.fineprint[S.lang === "zh" ? "zh" : "en"].forEach(f => lines.push({ t: "center", s: "muted", txt: f }));
+  if (S.priorFile) lines.push({ t: "center", s: "muted", txt: tr(CONTENT.priorFile.visit) });
   lines.push({ t: "barcode", payload: r.ref.includes("200") ? "STILL HERE" : "GO TO BED" });
   lines.push({ t: "center", s: "muted", txt: r.ref });
   return lines;
