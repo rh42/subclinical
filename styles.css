@@ -252,6 +252,14 @@ html.after-hours .container { background: #eae6d8; border-color: #55523f; }
 html.after-hours .lang-btn { background: #2a2820; border-color: #55523f; color: #b7b1a0; }
 html.after-hours .lang-btn.active { background: #eae6d8; color: var(--ink); }
 
+/* The folder's own history: coffee rings top right, where a right-handed
+   clerk sets the mug down. Earlier in the DOM than the sheet, so the sheet
+   covers the tucked-under part. A flat mark, multiplied into the manila;
+   after hours it sinks into the dark folder on its own. */
+.desk { position: absolute; top: 0; left: 0; right: 0; height: 640px; overflow: hidden; pointer-events: none; mix-blend-mode: multiply; }
+.desk svg { position: absolute; top: 40px; left: min(calc(50% + 250px), calc(100% - 132px)); width: 400px; height: 400px; }
+@media print { .desk { display: none; } }
+
 /* The lights pull-cord: hangs over the folder margin beside the sheet.
    Only rendered during the after-hours window; pulling it toggles the room. */
 .pull-cord {

@@ -371,7 +371,7 @@ CONTENT.ui = {
     footerHead: "NON-CLINICAL OBSERVATION",
     footerBody: "This diagnosis is for emotional validation only. If the results feel painfully accurate, blame the absurdity of modern existence, not the algorithm. If inaccurate... go touch some grass, my friend.",
     imprint: "FORM 88-B · REV. 2026-07 · PAGE 1 OF 1 (ALWAYS)",
-    credits: "Powered by questionable coping mechanisms. Made by @jelliwolf."
+    credits: "Powered by questionable coping mechanisms. Made by rh42."
   },
   zh: {
     title: "神經清醒度存疑研究所",
@@ -419,6 +419,6 @@ CONTENT.ui = {
     footerHead: "非臨床觀察報告",
     footerBody: "本結果僅供情緒驗證，不具臨床效力。若診斷結果過於準確，純屬這世界太荒謬，非本系統之過。若結果不準……去摸摸草吧朋友。",
     imprint: "88-B 表・2026-07 版・全 1 頁（一直都是）",
-    credits: "由 @jelliwolf 製作，動力來源為可疑的應對機制。"
+    credits: "由 rh42 製作，動力來源為可疑的應對機制。"
   }
 };

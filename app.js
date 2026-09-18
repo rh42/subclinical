@@ -285,7 +285,7 @@ function footerBox() {
     <p class="fp-body"><span class="fp-head">${esc(ui("footerHead"))}:</span> ${esc(ui("footerBody"))}</p>
     <div class="fp-imprint">
       <span>${esc(ui("imprint"))}</span>
-      <span>${esc(ui("credits")).replace("@jelliwolf", '<a href="https://x.com/jelliwolf" target="_blank" rel="noopener">@jelliwolf</a>')}</span>
+      <span>${esc(ui("credits")).replace("rh42", '<a href="https://rh42.github.io/" target="_blank" rel="noopener">rh42</a>')}</span>
     </div>
   </footer>`;
 }
@@ -845,6 +845,7 @@ document.addEventListener("click", e => {
   } else if (a === "second") {
     if (S.reroll < RULES.rerollMax) {
       S.reroll++;
+      coffees = Math.min(coffees + 1, RINGS.length); renderDesk();
       S.result = computeResult();
       render(); window.scrollTo(0, 0);
     }
@@ -900,5 +901,57 @@ document.getElementById("pull-cord").addEventListener("click", () => {
   applyLights();
 });
 applyLights();
+
+// ---------- desk (coffee rings on the folder) ----------
+// One ring from before you arrived. Every granted second opinion costs the
+// clerk another coffee: one more ring near the last, never mentioned, never
+// cleaned up (survives retakes; forgotten on reload like everything else).
+// Rim profile follows the coffee-ring effect (Deegan et al., 1997, Nature):
+// both contact lines pin, particles pile up there, so the edges are darker
+// than the band between them. A soft mask lifts one arc: the mug was tilted.
+// Coordinates are in the desk SVG's 400px box; the sheet edge sits at x=110,
+// so keep each gap (degrees, 0 = right, clockwise) on the visible right side.
+const RINGS = [
+  { x: 170, y: 160, gap: 40, seed: 11 },
+  { x: 148, y: 198, gap: 320, seed: 23 },
+  { x: 194, y: 178, gap: 80, seed: 37 },
+  { x: 160, y: 136, gap: 350, seed: 41 }
+];
+let coffees = 1;
+function ringSvg(r, i) {
+  const R = 112, a = r.gap * Math.PI / 180, b = -0.45;
+  const gx = r.x + (R + 8) * Math.cos(a), gy = r.y + (R + 8) * Math.sin(a);
+  const dx = r.x + (R + 10) * Math.cos(b), dy = r.y + (R + 10) * Math.sin(b);
+  return `<filter id="cf${i}" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="${r.seed}" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="8" xChannelSelector="R" yChannelSelector="G" result="wob"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.08" numOctaves="3" seed="${r.seed + 5}"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.2 0 0 0 -0.45" result="mottle"/>
+      <feComposite in="wob" in2="mottle" operator="in"/>
+    </filter>
+    <mask id="cm${i}" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+      <rect width="400" height="400" fill="#fff"/>
+      <circle cx="${gx.toFixed(1)}" cy="${gy.toFixed(1)}" r="44" fill="#000" filter="url(#cb)"/>
+    </mask>
+    <radialGradient id="cg${i}" gradientUnits="userSpaceOnUse" cx="${r.x}" cy="${r.y}" r="${R}">
+      <stop offset="0.87" stop-color="#94560f" stop-opacity="0"/>
+      <stop offset="0.885" stop-color="#94560f" stop-opacity="0.2"/>
+      <stop offset="0.92" stop-color="#94560f" stop-opacity="0.13"/>
+      <stop offset="0.975" stop-color="#94560f" stop-opacity="0.26"/>
+      <stop offset="0.992" stop-color="#6a360c" stop-opacity="0.62"/>
+      <stop offset="1" stop-color="#6a360c" stop-opacity="0"/>
+    </radialGradient>
+    <g mask="url(#cm${i})"><g filter="url(#cf${i})">
+      <circle cx="${r.x}" cy="${r.y}" r="${R}" fill="url(#cg${i})"/>
+      ${i === 0 ? `<circle cx="${dx.toFixed(1)}" cy="${dy.toFixed(1)}" r="3" fill="#6a360c" fill-opacity="0.22"/>` : ""}
+    </g></g>`;
+}
+function renderDesk() {
+  document.getElementById("desk").innerHTML = `<svg viewBox="0 0 400 400">
+    <filter id="cb" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14"/></filter>
+    ${RINGS.slice(0, coffees).map(ringSvg).join("")}
+  </svg>`;
+}
+renderDesk();
 
 render();
